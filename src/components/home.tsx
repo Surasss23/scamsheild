@@ -1,0 +1,30 @@
+"use client";
+import { useState } from "react";
+import Link from "next/link";
+import { ArrowRight, ArrowUpRight, ShieldCheck, GraduationCap, LockKeyhole, AudioLines, Siren, Link2, MessageSquareText, Mail, BriefcaseBusiness, QrCode, Image as ImageIcon } from "lucide-react";
+import { translations, type Language } from "@/lib/i18n";
+import { AudioButton } from "./audio-button";
+
+const icons = [Link2, MessageSquareText, Mail, BriefcaseBusiness, QrCode, ImageIcon];
+
+export function Home() {
+  const [language, setLanguage] = useState<Language>("en");
+  const t = translations[language];
+  return <main>
+    <header className="site-header">
+      <Link href="/" className="brand"><span className="brand-mark"><ShieldCheck size={19}/></span>scam<span className="brand-light">shield</span><b>.</b></Link>
+      <nav><a href="#learn">{t.learn}</a><a href="#tools">{t.tools}</a><a href="#scenarios">{t.scenarios}</a><a href="#help">{t.help}</a></nav>
+      <div className="header-actions"><label className="language-select"><span className="sr-only">Website language</span><select value={language} onChange={e => setLanguage(e.target.value as Language)}><option value="en">English</option><option value="hi">हिन्दी</option><option value="te">తెలుగు</option></select></label><a className="header-cta" href="#tools">Check something <ArrowUpRight size={15}/></a></div>
+    </header>
+    <section className="hero shell">
+      <div className="hero-copy"><div className="eyebrow"><i/> {t.eyebrow}</div><h1>{t.headline[0]}<br/><span>{t.headline[1]}</span></h1><p>{t.intro}</p><div className="hero-actions"><a className="button-primary" href="#tools">{t.explore}<ArrowUpRight size={17}/></a><a className="button-secondary" href="#learn"><GraduationCap size={17}/>{t.learnMore}</a></div><div className="hero-meta"><ShieldCheck size={14}/>{t.free}</div><AudioButton text={t.headline.join(" ") + " " + t.intro} language={language}/></div>
+      <div className="hero-visual"><div className="visual-grid"/><div className="visual-ring ring-one"/><div className="visual-ring ring-two"/><div className="shield-graphic"><ShieldCheck size={83} strokeWidth={1.15}/></div><div className="floating-label label-top"><i/> LIVE AWARENESS</div><div className="floating-label label-bottom">VERIFY BEFORE YOU TRUST</div><div className="visual-caption">YOUR DIGITAL SAFETY LAYER <span>01 / 03</span></div></div>
+    </section>
+    <div className="trust-strip"><div className="shell trust-items"><span><LockKeyhole size={15}/> No account needed</span><span><AudioLines size={15}/> Listen in 3 languages</span><span><ShieldCheck size={15}/> Privacy-first by design</span><span>Free public education</span></div></div>
+    <section id="tools" className="section shell"><div className="section-head"><div className="eyebrow"><i/> PRACTICAL SAFETY TOOLS</div><h2>{t.toolsTitle}</h2><p>{t.toolsDesc}</p></div><div className="tool-grid">{t.cards.map(([title, desc, href], i) => { const Icon = icons[i]; return <Link className="tool-card" href={href} key={href}><div className="tool-card-top"><span className="tool-icon"><Icon size={20}/></span><span>0{i+1}</span></div><h3>{title}</h3><p>{desc}</p><div className="tool-link">Explore tool <ArrowUpRight size={15}/></div></Link>; })}</div></section>
+    <section id="learn" className="learn-section"><div className="shell learn-layout"><div className="learn-art"><div className="learn-orbit"/><div className="learn-symbol"><GraduationCap size={48}/></div></div><div><div className="eyebrow"><i/> LEARN WITHOUT FEAR</div><h2>{t.learnTitle}</h2><p>{t.learnDesc}</p><div className="learn-points"><span><ShieldCheck size={17}/> How scammers build trust</span><span><GraduationCap size={17}/> Warning signs to look for</span><span><AudioLines size={17}/> Listen in your language</span></div><a className="text-link" href="#scenarios">Explore common scam patterns <ArrowRight size={16}/></a></div></div></section>
+    <section id="scenarios" className="section shell"><div className="eyebrow"><i/> UNDERSTAND THE METHOD</div><h2>Scams work by manipulating trust.</h2><p className="section-desc">Learn common patterns behind everyday digital fraud.</p><div className="scenario-grid"><article><span>01 / URGENCY</span><h3>“Act now or lose access.”</h3><p>Scammers create artificial deadlines so you act before checking.</p></article><article><span>02 / AUTHORITY</span><h3>“This is the bank / police.”</h3><p>They impersonate trusted institutions to make demands feel legitimate.</p></article><article><span>03 / REWARD</span><h3>“You have won a prize.”</h3><p>Unexpected rewards can be used to draw you into sharing details or paying fees.</p></article></div></section>
+    <section id="help" className="help-section"><div className="shell help-panel"><span className="help-icon"><Siren size={25}/></span><div><div className="eyebrow">NEED HELP RIGHT NOW?</div><h2>{t.helpTitle}</h2><p>{t.helpDesc}</p><small>India · Financial cyber fraud helpline: <strong>1930</strong></small></div><a className="button-light" href="https://cybercrime.gov.in/" target="_blank" rel="noreferrer">{t.report}<ArrowUpRight size={16}/></a></div></section>
+    <footer className="footer shell"><Link href="/" className="brand"><span className="brand-mark"><ShieldCheck size={17}/></span>scam<span className="brand-light">shield</span><b>.</b></Link><span>Awareness helps. Verification matters. Never share OTPs, PINs or passwords.</span><small>BUILT FOR A SAFER DIGITAL INDIA</small></footer>
+  </main>;
+}
