@@ -39,8 +39,12 @@ export function ToolAnalyzer({slug}:{slug:string}){
   let qrText="";try{const pixels=ctx.getImageData(0,0,canvas.width,canvas.height);const qr=jsQR(pixels.data,pixels.width,pixels.height);if(qr)qrText=qr.data;}catch{}
   let extracted="";try{const Tesseract=await import("tesseract.js");const ocr=await Tesseract.recognize(file,"eng");extracted=ocr.data.text.trim();}catch{}
   const combined=[qrText?"QR content (not opened): "+qrText:"",extracted?"Text detected in image:\n"+extracted:""].filter(Boolean).join("\n\n");
-  if(combined){setValue(combined);setResult(null);setNote(qrText?"QR content and visible text extracted locally. Review the destination; it has not been opened.":"Text extracted locally. Please review OCR for mistakes.");}
-  else setNote("No readable QR code or text was detected. You can type the visible content manually.");
+  if(combined){
+   setValue("");
+   setResult(null);
+   setNote("Image text extracted. Starting scam analysis…");
+   await run(combined);
+  } else setNote("No readable QR code or text was detected. Try a clearer image or type the message manually.");
  }catch{setNote("Could not read this image. Try a clear JPG or PNG, or type the text manually.");}finally{setBusy(false);}}
  function speak(){if(!("speechSynthesis"in window)){setNote("Audio playback is not supported in this browser.");return;}window.speechSynthesis.cancel();const speech=result?"Risk score "+result.score+" out of 100. "+result.level+" risk. "+result.signals.map(s=>s.title+". "+s.detail).join(". ")+". "+result.recommendation:info.description;const u=new SpeechSynthesisUtterance(speech);u.lang="en-IN";window.speechSynthesis.speak(u);}
  const color=result?(result.score>=75?"#f87171":result.score>=45?"#fbbf24":"#72d6aa"):"#72d6aa";
