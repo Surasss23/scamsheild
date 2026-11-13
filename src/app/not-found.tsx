@@ -1,2 +1,14 @@
 import Link from "next/link";
-export default function NotFound(){return <main className="tool-page"><section className="tool-shell"><div className="eyebrow"><i/> PAGE NOT FOUND</div><h1>This path doesn't exist.</h1><p className="tool-intro">Return to ScamShield and choose a safety tool.</p><Link className="button-primary" href="/">Back to home</Link></section></main>;}
+
+export default function NotFound() {
+  return (
+    <main className="tool-page">
+      <section className="tool-shell">
+        <div className="eyebrow"><i /> PAGE NOT FOUND</div>
+        <h1>This path doesn&apos;t exist.</h1>
+        <p className="tool-intro">Return to ScamShield and choose a safety tool.</p>
+        <Link className="button-primary" href="/">Back to home</Link>
+      </section>
+    </main>
+  );
+}
