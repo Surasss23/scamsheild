@@ -1,26 +1,29 @@
 # ScamShield
 
-A free, multilingual cyber-safety awareness platform for the public.
+A free, public, multilingual cyber-safety awareness platform.
 
-## Product principles
-- Public access without visitor accounts.
-- English by default, with Hindi and Telugu language options.
-- Learn how scams work, inspect common warning signs, and find official reporting guidance.
-- Privacy-first: analysis inputs are not persisted by default.
-- Risk scores are indicators, not proof that something is fraudulent or safe.
+## Principles
+- No visitor login, registration, subscriptions or database.
+- English by default, with Hindi and Telugu interface/audio support.
+- Local, transparent analysis for URLs, messages, email text, job offers, UPI-related messages, phone-number patterns and screenshots.
+- QR decoding and screenshot OCR run in the visitor's browser.
+- No scan content is stored or sent to a database.
+- Risk scores are heuristic indicators, not proof or a guarantee of safety.
 
 ## Stack
-Next.js, TypeScript, Tailwind CSS, Supabase (content storage and protected admin workflows), and Vercel.
+Next.js, TypeScript, Tailwind CSS, browser Web Speech API, Tesseract.js (on-device OCR) and jsQR (QR decoding). Deployed on Vercel from GitHub.
 
-## Browser-only workflow
-The project is maintained through GitHub. Connect this repository to Vercel for deployment. Configure the Supabase project URL and publishable key in Vercel Environment Variables when Supabase setup is complete.
+## Development
+Vercel installs dependencies and builds the project from this repository. No local installation is required for the repository owner.
 
-## Environment variables
-Copy the names from `.env.example` into Vercel:
-- `NEXT_PUBLIC_SUPABASE_URL`
-- `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
+## Safety and limitations
+- URL checks use local structural heuristics; they do not establish live domain reputation or malware status.
+- Phone-number checks cannot confirm the identity or reputation of a caller.
+- QR codes are decoded locally; users must inspect the destination before opening it.
+- Screenshot OCR runs in the browser and may make mistakes.
+- A low risk score never means a message or website is safe.
+- The site does not submit complaints on a visitor's behalf. It provides official reporting guidance and links.
 
-No secret/service-role key belongs in browser-visible variables.
-
-## Safety note
-The initial analyzers use transparent local heuristics. They do not query a complete threat-intelligence database and must never be described as guaranteeing a URL, message, email, phone number, or QR code is safe.
+## Official India reporting
+- Cybercrime portal: https://cybercrime.gov.in/
+- Financial cyber fraud helpline: 1930
